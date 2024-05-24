@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DebtReminderApp.Views.DebtorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:DebtReminderApp.ViewModels"
+    xmlns:vm="clr-namespace:DebtReminderApp.ViewModels"
+    Title="DebtorPage"
+    x:DataType="vm:DebtorViewModel">
+
+    <StackLayout Padding="10">
+        <!--  Name  -->
+        <Label Margin="0,12,0,0" Text="Name:" />
+        <Entry
+            x:Name="NameEntry"
+            Placeholder="Enter name"
+            Text="{Binding Debtor.Name}" />
+
+        <!--  PhoneNumber  -->
+        <Label Margin="0,12,0,0" Text="Phone Number:" />
+        <Entry
+            x:Name="PhoneNumberEntry"
+            Keyboard="Telephone"
+            Placeholder="Enter phone number"
+            Text="{Binding Debtor.PhoneNumber}" />
+
+        <!--  TotalDebt  -->
+        <Label Margin="0,12,0,0" Text="Total Debt:" />
+        <Entry
+            x:Name="TotalDebtEntry"
+            Keyboard="Numeric"
+            Placeholder="Enter total debt"
+            Text="{Binding Debtor.TotalDebt}" />
+
+        <!--  Description  -->
+        <Label Margin="0,12,0,0" Text="Description:" />
+        <Editor
+            x:Name="DescriptionEditor"
+            Placeholder="Enter description"
+            Text="{Binding Debtor.Description}" />
+
+        <!--  Status  -->
+        <Label Margin="0,12,0,0" Text="Status:" />
+        <Picker x:Name="StatusPicker" SelectedItem="{Binding Debtor.Status, Mode=TwoWay}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Pending</x:String>
+                    <x:String>Paid</x:String>
+                    <x:String>Overdue</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <!--  Save Button  -->
+        <Button
+            Margin="0,34,0,0"
+            Command="{Binding SaveCommand}"
+            Text="Save" />
+    </StackLayout>
+</ContentPage>

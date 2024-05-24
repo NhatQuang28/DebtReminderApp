@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DebtReminderApp.Views.DebtorsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ef="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:DebtReminderApp.Models"
+    xmlns:vm="clr-namespace:DebtReminderApp.ViewModels"
+    Title="Debtors"
+    x:DataType="vm:DebtorsViewModel">
+
+    <!--  Add an item to the toolbar  -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding NewCommand}"
+            IconImageSource="{FileImageSource File='add_icon.png'}"
+            Text="Add" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Padding="2" BackgroundColor="WhiteSmoke">
+
+        <CollectionView ItemsSource="{Binding Debtors}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Debtor">
+                    <Frame
+                        Margin="4"
+                        Padding="10"
+                        BackgroundColor="White"
+                        BorderColor="Transparent"
+                        CornerRadius="50"
+                        HasShadow="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Aspect="AspectFill"
+                                HeightRequest="100"
+                                Source="ava_example.jpg"
+                                WidthRequest="100">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        Center="50,50"
+                                        RadiusX="50"
+                                        RadiusY="50" />
+                                </Image.Clip>
+                            </Image>
+                            <StackLayout Grid.Column="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        Margin="0,0,4,0"
+                                        HeightRequest="14"
+                                        Source="user.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="14" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding Name}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="20"
+                                        Source="icon_phone.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Small"
+                                        Text="{Binding PhoneNumber}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="20"
+                                        Source="icon_debt.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Small"
+                                        Text="{Binding TotalDebt}"
+                                        TextColor="Red" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="20"
+                                        Source="icon_status.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Small"
+                                        Text="{Binding Status}"
+                                        TextColor="Red" />
+                                </Grid>
+                            </StackLayout>
+                            <StackLayout
+                                Grid.Column="2"
+                                Padding="8"
+                                HorizontalOptions="EndAndExpand"
+                                Orientation="Horizontal">
+                                <ImageButton
+                                    HeightRequest="28"
+                                    Source="user_edit.png"
+                                    WidthRequest="28" />
+                                <ImageButton
+                                    Margin="12,0,0,0"
+                                    HeightRequest="28"
+                                    Source="user_remove.png"
+                                    WidthRequest="28" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </StackLayout>
+
+
+</ContentPage>

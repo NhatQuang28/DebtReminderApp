@@ -1,0 +1,5 @@
+﻿//Bug
+--Khi add Debtor rồi back ngược lại màng hình cha thì chưa reload lại data
+
+//Cần làm
+-Chỉnh UI lại cho Debtorpage
