@@ -19,7 +19,7 @@ namespace DebtReminderApp.Models
 		[Range(0, double.MaxValue, ErrorMessage = "Total Debt must be a positive number.")]
 		public double TotalDebt { get; set; }
 
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		[DefaultValue(typeof(DateTime), "")]
 		public DateTime ModifiedDate { get; set; } = DateTime.UtcNow;
