@@ -60,6 +60,8 @@
 	  <None Remove="Resources\Images\add_icon.png" />
 	  <None Remove="Resources\Images\arrow_left_icon.png" />
 	  <None Remove="Resources\Images\ava_example.jpg" />
+	  <None Remove="Resources\Images\circle_dollar.png" />
+	  <None Remove="Resources\Images\circle_user.png" />
 	  <None Remove="Resources\Images\gear_icon.png" />
 	  <None Remove="Resources\Images\home_icon.png" />
 	  <None Remove="Resources\Images\poll_people_icon.png" />

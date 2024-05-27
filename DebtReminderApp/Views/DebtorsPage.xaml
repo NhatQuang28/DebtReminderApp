@@ -19,7 +19,7 @@
 
     <StackLayout Padding="2" BackgroundColor="WhiteSmoke">
 
-        <CollectionView ItemsSource="{Binding Debtors}">
+        <CollectionView ItemsSource="{Binding Debtors}" VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Debtor">
                     <Frame
@@ -33,7 +33,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Image
@@ -49,7 +48,11 @@
                                         RadiusY="50" />
                                 </Image.Clip>
                             </Image>
-                            <StackLayout Grid.Column="1" Margin="10,0,0,0">
+                            <StackLayout
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                Spacing="5"
+                                VerticalOptions="Center">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -58,14 +61,14 @@
                                     <Image
                                         Grid.Column="0"
                                         Margin="0,0,4,0"
-                                        HeightRequest="14"
-                                        Source="user.png"
+                                        HeightRequest="16"
+                                        Source="circle_user.png"
                                         VerticalOptions="Center"
-                                        WidthRequest="14" />
+                                        WidthRequest="16" />
                                     <Label
                                         Grid.Column="1"
                                         FontAttributes="Bold"
-                                        FontSize="Medium"
+                                        FontSize="Default"
                                         Text="{Binding Name}" />
                                 </Grid>
                                 <Grid>
@@ -75,62 +78,75 @@
                                     </Grid.ColumnDefinitions>
                                     <Image
                                         Grid.Column="0"
-                                        HeightRequest="20"
-                                        Source="icon_phone.png"
+                                        Margin="0,0,4,0"
+                                        HeightRequest="16"
+                                        Source="circle_dollar.png"
                                         VerticalOptions="Center"
-                                        WidthRequest="20" />
+                                        WidthRequest="16" />
                                     <Label
                                         Grid.Column="1"
                                         FontSize="Small"
-                                        Text="{Binding PhoneNumber}" />
+                                        Text="{Binding TotalDebt, StringFormat='{0:#,0.#}'}" />
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Image
+                                    <!--<Image
                                         Grid.Column="0"
                                         HeightRequest="20"
-                                        Source="icon_debt.png"
+                                        Source="empty.png"
                                         VerticalOptions="Center"
-                                        WidthRequest="20" />
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="Small"
-                                        Text="{Binding TotalDebt}"
-                                        TextColor="Red" />
-                                </Grid>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image
-                                        Grid.Column="0"
-                                        HeightRequest="20"
-                                        Source="icon_status.png"
-                                        VerticalOptions="Center"
-                                        WidthRequest="20" />
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="Small"
-                                        Text="{Binding Status}"
-                                        TextColor="Red" />
+                                        WidthRequest="20" />-->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontSize="Default"
+                                            HorizontalOptions="FillAndExpand"
+                                            Text="{Binding Status}"
+                                            VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Status}"
+                                                    TargetType="Label"
+                                                    Value="Pending">
+                                                    <Setter Property="TextColor" Value="Yellow" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Status}"
+                                                    TargetType="Label"
+                                                    Value="Paid">
+                                                    <Setter Property="TextColor" Value="Green" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Status}"
+                                                    TargetType="Label"
+                                                    Value="Overdue">
+                                                    <Setter Property="TextColor" Value="Red" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
                                 </Grid>
                             </StackLayout>
                             <StackLayout
                                 Grid.Column="2"
-                                Padding="8"
+                                Padding="4"
                                 HorizontalOptions="EndAndExpand"
                                 Orientation="Horizontal">
                                 <ImageButton
-                                    HeightRequest="28"
+                                    HeightRequest="24"
                                     Source="user_edit.png"
                                     WidthRequest="28" />
                                 <ImageButton
                                     Margin="12,0,0,0"
-                                    HeightRequest="28"
+                                    HeightRequest="24"
                                     Source="user_remove.png"
                                     WidthRequest="28" />
                             </StackLayout>

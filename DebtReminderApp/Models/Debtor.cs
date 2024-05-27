@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace DebtReminderApp.Models
@@ -20,7 +21,8 @@ namespace DebtReminderApp.Models
 
 		public string Description { get; set; }
 
-		public DateTime ModifiedDate { get; set; } = DateTime.Now;
+		[DefaultValue(typeof(DateTime), "")]
+		public DateTime ModifiedDate { get; set; } = DateTime.UtcNow;
 
 		[Required(ErrorMessage = "Status is required.")]
 		public string Status { get; set; }

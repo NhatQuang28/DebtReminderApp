@@ -29,13 +29,21 @@ namespace DebtReminderApp.ViewModels
 			await ExecuteAsync(async () =>
 			{
 				var debtors = await _context.GetAllAsync<Debtor>();
-				if (debtors is not null && debtors.Any())
+				if (debtors != null && debtors.Any())
 				{
-					Debtors ??= new ObservableCollection<Debtor>();
+					var sortedDebtors = debtors.OrderByDescending(d => d.ModifiedDate).ToList();
 
-					foreach (var debtor in debtors)
+					if (Debtors == null)
 					{
-						Debtors.Add(debtor);
+						Debtors = new ObservableCollection<Debtor>(sortedDebtors);
+					}
+					else
+					{
+						Debtors.Clear();
+						foreach (var debtor in sortedDebtors)
+						{
+							Debtors.Add(debtor);
+						}
 					}
 				}
 			});
