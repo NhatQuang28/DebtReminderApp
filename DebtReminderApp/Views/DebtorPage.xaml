@@ -41,7 +41,10 @@
 
         <!--  Status  -->
         <Label Margin="0,12,0,0" Text="Status:" />
-        <Picker x:Name="StatusPicker" SelectedItem="{Binding Debtor.Status, Mode=TwoWay}">
+        <Picker
+            x:Name="StatusPicker"
+            SelectedIndex="0"
+            SelectedItem="{Binding Debtor.Status, Mode=TwoWay}">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Pending</x:String>
