@@ -83,6 +83,7 @@ namespace DebtReminderApp.ViewModels
 
 					if (await _context.UpdateItemAsync<Debtor>(debtor))
 					{
+						var debtor = Debtors.FirstOrDefault(p => p.Id == id);
 						Debtors.Remove(debtor);
 					}
 					else
