@@ -26,5 +26,8 @@ namespace DebtReminderApp.Models
 
 		[Required(ErrorMessage = "Status is required.")]
 		public string Status { get; set; }
+
+		[DefaultValue(false)]
+		public bool IsDeleted { get; set; }
 	}
 }

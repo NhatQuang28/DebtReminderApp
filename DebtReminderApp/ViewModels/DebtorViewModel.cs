@@ -14,7 +14,7 @@ namespace DebtReminderApp.ViewModels
 		private readonly DatabaseContext _context;
 
 		[ObservableProperty]
-		private int _idDebter = 0;
+		private int _idDebtor = 0;
 
 		[ObservableProperty]
 		private Debtor _debtor = new();
@@ -23,29 +23,33 @@ namespace DebtReminderApp.ViewModels
 		{
 			this._context = context;
 			SaveCommand = new AsyncRelayCommand(SaveDebtorAsync);
+			BackCommand = new AsyncRelayCommand(ClearDebtorAsync);
 		}
-
-		[ObservableProperty]
-		private bool _isNew;
-
-		[ObservableProperty]
-		private bool _isEdit;
 
 		[ObservableProperty]
 		private bool _isView;
 
 		public ICommand SaveCommand { get; }
+		public ICommand BackCommand { get; }
 
 		public async Task LoadDebtorAsync()
 		{
-			if (IdDebter != 0)
+			if (IdDebtor != 0)
 			{
 				await ExecuteAsync(async () =>
 				{
-					var debtor = await _context.GetItemByKeyAsync<Debtor>(IdDebter);
+					var debtor = await _context.GetItemByKeyAsync<Debtor>(IdDebtor);
 					Debtor = debtor;
 				});
 			}
+		}
+
+		public async Task ClearDebtorAsync()
+		{
+			await Shell.Current.GoToAsync("..");
+			Debtor = new();
+			IsView = false;
+			IdDebtor = 0;
 		}
 
 		[RelayCommand]
@@ -62,7 +66,7 @@ namespace DebtReminderApp.ViewModels
 
 			await ExecuteAsync(async () =>
 			{
-				if (IdDebter == 0)
+				if (IdDebtor == 0)
 				{
 					if (await _context.AddItemAsync<Debtor>(Debtor))
 					{
@@ -114,11 +118,12 @@ namespace DebtReminderApp.ViewModels
 		{
 			if (query.ContainsKey(EDIT_EVENT))
 			{
-				IdDebter = int.Parse(query[EDIT_EVENT].ToString());
+				IdDebtor = int.Parse(query[EDIT_EVENT].ToString());
 			}
 			else if (query.ContainsKey(VIEW_EVENT))
 			{
-				IdDebter = int.Parse(query[VIEW_EVENT].ToString());
+				IdDebtor = int.Parse(query[VIEW_EVENT].ToString());
+				IsView = true;
 			}
 		}
 	}

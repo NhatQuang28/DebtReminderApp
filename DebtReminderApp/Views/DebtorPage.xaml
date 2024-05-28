@@ -8,6 +8,10 @@
     Title="DebtorPage"
     x:DataType="vm:DebtorViewModel">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" IconOverride="arrow_left_icon.png" />
+    </Shell.BackButtonBehavior>
+
     <StackLayout Padding="10">
         <!--  Name  -->
         <Label Margin="0,12,0,0" Text="Name:" />

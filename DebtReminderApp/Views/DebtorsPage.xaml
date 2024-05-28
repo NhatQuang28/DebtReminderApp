@@ -12,14 +12,17 @@
     <!--  Add an item to the toolbar  -->
     <ContentPage.ToolbarItems>
         <ToolbarItem
-            Command="{Binding NewCommand}"
+            Command="{Binding NewDebtorCommand}"
             IconImageSource="{FileImageSource File='add_icon.png'}"
             Text="Add" />
     </ContentPage.ToolbarItems>
 
     <StackLayout Padding="2" BackgroundColor="WhiteSmoke">
 
-        <CollectionView ItemsSource="{Binding Debtors}" VerticalOptions="FillAndExpand">
+        <CollectionView
+            x:Name="collectionView"
+            ItemsSource="{Binding Debtors}"
+            VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Debtor">
                     <Frame
@@ -28,7 +31,11 @@
                         BackgroundColor="White"
                         BorderColor="Transparent"
                         CornerRadius="50"
-                        HasShadow="True">
+                        HasShadow="True"
+                        IsClippedToBounds="True">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemTapped" />
+                        </Frame.GestureRecognizers>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -116,7 +123,7 @@
                                                     Binding="{Binding Status}"
                                                     TargetType="Label"
                                                     Value="Pending">
-                                                    <Setter Property="TextColor" Value="Yellow" />
+                                                    <Setter Property="TextColor" Value="Violet" />
                                                 </DataTrigger>
                                                 <DataTrigger
                                                     Binding="{Binding Status}"
@@ -137,15 +144,24 @@
                             </StackLayout>
                             <StackLayout
                                 Grid.Column="2"
-                                Padding="4"
                                 HorizontalOptions="EndAndExpand"
                                 Orientation="Horizontal">
+                                <!--<ImageButton
+                                    Command="{Binding BindingContext.EditDebtorCommand, Source={x:Reference Name=collectionView}}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="24"
+                                    Source="user_edit.png"
+                                    WidthRequest="28" />-->
                                 <ImageButton
+                                    Clicked="OnEditButtonClicked"
+                                    CommandParameter="{Binding Id}"
                                     HeightRequest="24"
                                     Source="user_edit.png"
                                     WidthRequest="28" />
                                 <ImageButton
                                     Margin="12,0,0,0"
+                                    Clicked="OnRemoveButtonClicked"
+                                    CommandParameter="{Binding Id}"
                                     HeightRequest="24"
                                     Source="user_remove.png"
                                     WidthRequest="28" />

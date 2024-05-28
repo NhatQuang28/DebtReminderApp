@@ -16,19 +16,25 @@ namespace DebtReminderApp.ViewModels
 		public DebtorsViewModel(DatabaseContext context)
 		{
 			this._context = context;
-			NewCommand = new AsyncRelayCommand(OnAddClick);
+			NewDebtorCommand = new AsyncRelayCommand(NavAddDebtorPage);
+			//EditDebtorPageCommand = new AsyncRelayCommand<int>(NavEditDebtorPage);
+			RemoveDebtorCommand = new AsyncRelayCommand<int>(RemoveDebtor);
+			//ViewDebtorCommand = new AsyncRelayCommand<int>(NavViewDebtorPage);
 		}
 
 		[ObservableProperty]
 		private ObservableCollection<Debtor> _debtors = new();
 
-		public ICommand NewCommand { get; }
+		public ICommand NewDebtorCommand { get; }
+		//public ICommand EditDebtorPageCommand { get; }
+		public ICommand RemoveDebtorCommand { get; }
+		//public ICommand ViewDebtorCommand { get; }
 
 		public async Task LoadDebtorsAsync()
 		{
 			await ExecuteAsync(async () =>
 			{
-				var debtors = await _context.GetAllAsync<Debtor>();
+				var debtors = await _context.GetFileteredAsync<Debtor>(d => d.IsDeleted == false);
 				if (debtors != null && debtors.Any())
 				{
 					var sortedDebtors = debtors.OrderByDescending(d => d.ModifiedDate).ToList();
@@ -48,39 +54,43 @@ namespace DebtReminderApp.ViewModels
 				}
 			});
 		}
-
-		[RelayCommand]
-		private async Task SelectDebtorAsync(int id)
-		{
-			await Shell.Current.GoToAsync($"{nameof(DebtorPage)}?{VIEW_EVENT}={id}");
-		}
-
-		private async Task OnAddClick()
+		private async Task NavAddDebtorPage()
 		{
 			await Shell.Current.GoToAsync(nameof(DebtorPage));
 		}
 
-		[RelayCommand]
-		public async Task OnEditClick(int id)
+		public async Task NavEditDebtorPage(int id)
 		{
 			await Shell.Current.GoToAsync($"{nameof(DebtorPage)}?{EDIT_EVENT}={id}");
 		}
 
-		[RelayCommand]
-		public async Task OnRemoveClick(int id)
+		public async Task NavViewDebtorPage(int id)
 		{
-			await ExecuteAsync(async () =>
+			await Shell.Current.GoToAsync($"{nameof(DebtorPage)}?{VIEW_EVENT}={id}");
+		}
+
+		public async Task RemoveDebtor(int id)
+		{
+			var debtor = await _context.GetItemByKeyAsync<Debtor>(id);
+
+			bool result = await Shell.Current.DisplayAlert("Confirm Delete", "Are you sure you want to delete this debtor?", "Yes", "No");
+
+			if (debtor != null && result)
 			{
-				if (await _context.DeleteItemByKeyAsync<Debtor>(id))
+				await ExecuteAsync(async () =>
 				{
-					var debtor = Debtors.FirstOrDefault(p => p.Id == id);
-					Debtors.Remove(debtor);
-				}
-				else
-				{
-					await Shell.Current.DisplayAlert("Delete Error", "Debtor was not deleted", "Ok");
-				}
-			});
+					debtor.IsDeleted = true;
+
+					if (await _context.UpdateItemAsync<Debtor>(debtor))
+					{
+						Debtors.Remove(debtor);
+					}
+					else
+					{
+						await Shell.Current.DisplayAlert("Delete Error", "Debtor was not deleted", "Ok");
+					}
+				});
+			}
 		}
 
 		private async Task ExecuteAsync(Func<Task> operation)
