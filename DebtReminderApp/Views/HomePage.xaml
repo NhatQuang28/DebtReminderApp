@@ -3,10 +3,52 @@
     x:Class="DebtReminderApp.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
     <StackLayout>
-        <Label
-            HorizontalOptions="CenterAndExpand"
-            Text="Welcome to the Home Page!"
-            VerticalOptions="CenterAndExpand" />
+        <!--  Số Nợ  -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Frame
+                Grid.Column="0"
+                BackgroundColor="White"
+                CornerRadius="10"
+                HasShadow="True"
+                HorizontalOptions="CenterAndExpand">
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                    <Label
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="0"
+                        TextColor="Red" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="Người 1"
+                        TextColor="Gray" />
+                </StackLayout>
+            </Frame>
+            <Frame
+                Grid.Column="1"
+                BackgroundColor="White"
+                CornerRadius="10"
+                HasShadow="True"
+                HorizontalOptions="CenterAndExpand">
+                <StackLayout Orientation="Vertical">
+                    <Label
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="0"
+                        TextColor="Red" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="Người 1"
+                        TextColor="Gray" />
+                </StackLayout>
+            </Frame>
+        </Grid>
     </StackLayout>
 </ContentPage>

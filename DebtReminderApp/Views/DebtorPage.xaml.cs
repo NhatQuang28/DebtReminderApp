@@ -17,9 +17,9 @@ public partial class DebtorPage : ContentPage
 		await _viewModel.LoadDebtorAsync();
 	}
 
-	protected override async bool OnBackButtonPressed()
+	protected override bool OnBackButtonPressed()
 	{
-		await _viewModel.ClearDebtorAsync();
+		_viewModel.ClearDebtorAsync();
 		return base.OnBackButtonPressed();
 	}
 }

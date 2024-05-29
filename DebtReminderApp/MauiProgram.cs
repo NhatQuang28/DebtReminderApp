@@ -24,12 +24,12 @@ namespace DebtReminderApp
 
 			//Configuration Dependency Injection
 			builder.Services.AddSingleton<DatabaseContext>();
-			builder.Services.AddSingleton<DebtorsViewModel>();
-			builder.Services.AddSingleton<DebtorViewModel>();
+			builder.Services.AddScoped<DebtorsViewModel>();
+			builder.Services.AddScoped<DebtorViewModel>();
 
-			builder.Services.AddSingleton<DebtorsPage>();
-			builder.Services.AddSingleton<DebtorPage>();
-			builder.Services.AddSingleton<AppShell>();
+			builder.Services.AddScoped<DebtorsPage>();
+			builder.Services.AddScoped<DebtorPage>();
+			builder.Services.AddScoped<AppShell>();
 
 			return builder.Build();
 		}

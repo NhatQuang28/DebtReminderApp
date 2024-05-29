@@ -23,7 +23,7 @@ namespace DebtReminderApp.ViewModels
 		{
 			this._context = context;
 			SaveCommand = new AsyncRelayCommand(SaveDebtorAsync);
-			BackCommand = new AsyncRelayCommand(ClearDebtorAsync);
+			BackCommand = new RelayCommand(ClearDebtorAsync);
 		}
 
 		[ObservableProperty]
@@ -44,9 +44,9 @@ namespace DebtReminderApp.ViewModels
 			}
 		}
 
-		public async Task ClearDebtorAsync()
+		public void ClearDebtorAsync()
 		{
-			await Shell.Current.GoToAsync("..");
+			Shell.Current.GoToAsync("..");
 			Debtor = new();
 			IsView = false;
 			IdDebtor = 0;
@@ -71,6 +71,7 @@ namespace DebtReminderApp.ViewModels
 					if (await _context.AddItemAsync<Debtor>(Debtor))
 					{
 						await Shell.Current.DisplayAlert("Success", "Debtor information updation successfully.", "Ok");
+						ClearDebtorAsync();
 					}
 					else
 					{
@@ -82,6 +83,7 @@ namespace DebtReminderApp.ViewModels
 					if (await _context.UpdateItemAsync<Debtor>(Debtor))
 					{
 						await Shell.Current.DisplayAlert("Success", "Debtor information updation successfully.", "Ok");
+						await Shell.Current.GoToAsync("..");
 					}
 					else
 					{
